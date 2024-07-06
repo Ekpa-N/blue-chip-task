@@ -44,12 +44,14 @@ export default function DashboardLayout({ children }: DashboardProps) {
         if (window.innerWidth >= 1440) {
             setIsDesktopView(true)
             setIsProfileBarOpen(true)
+            setIsSideBarOpen(true)
             window.removeEventListener("click", (e) => { handleSideBar(e) })
             return
         }
         if (window.innerWidth < 1440) {
             setIsDesktopView(false)
             setIsProfileBarOpen(false)
+            setIsSideBarOpen(false)
             window.addEventListener("click", (e) => { handleSideBar(e) })
             return
         }
@@ -81,6 +83,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
         if (!isMobileDevice && (window.innerWidth >= 1440)) {
             setIsDesktopView(true)
             setIsProfileBarOpen(true)
+            setIsSideBarOpen(true)
             window.addEventListener("resize", () => { handleResize() })
             window.removeEventListener("click", (e) => { handleSideBar(e) })
             setIsLoading(false)
@@ -99,23 +102,12 @@ export default function DashboardLayout({ children }: DashboardProps) {
     }
 
     return (
-        <main className="flex h-[100%] w-full flex-col overflow-y-auto overflow-x-hidden  bg-[#F7F8FA] relative">
+        <main className={`flex h-[100%] w-full flex-col overflow-y-auto overflow-x-hidden  bg-[#F7F8FA] relative`}>
             <Nav isDesktopView={isDesktopView} openProfileBarRef={openProfileBarRef} openLeftSideBarRef={openLeftSideBarRef} handleSideBar={handleSideBar} />
             <ProfileBar isDesktopView={isDesktopView} isProfileBarOpen={isProfileBarOpen} />
-            <SideBar isSideBarOpen={isSideBarOpen} />
+            <SideBar isDesktopView={isDesktopView} isSideBarOpen={isSideBarOpen} />
 
-            <div className="grow bg-[#F7F8FA] mt-[100px] desktop:flex pb-[20px] overflow-auto">
-                <nav className={`sticky top-0 bg-white w-[70px] h-full border hidden desktop:flex flex-col items-center`}>
-                    <div className="items-center justify-center h-[99.5px] w-full flex flex-col border-b-[1px] border-[#F5F6F7]">
-                        <button className="flex flex-col h-[50px] bg-[white] border border-[#F5F6F7] w-[50px] items-center justify-center rounded-[50%] shadow-sm">
-                            <div className="flex flex-col w-[18px] h-[12px] items-center relative">
-                                <div className="bg-[#C3CAD9] h-[2px] absolute rounded-[10px] w-full origin-center rotate-45 top-[50%]"></div>
-                                <div className="bg-[#C3CAD9] h-[2px] absolute rounded-[10px] w-full origin-center -rotate-45 top-[50%]"></div>
-                            </div>
-                        </button>
-                    </div>
-
-                </nav>
+            <div className={`grow bg-[#F7F8FA] mt-[100px] desktop:ml-[80px] desktop:flex pb-[20px] overflow-auto`}>
                 <div className="borde desktop:h-fit">
                     {children}
                 </div>
